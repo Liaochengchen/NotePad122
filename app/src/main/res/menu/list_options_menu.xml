@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--  This is our one standard application action (creating a new note). -->
+    <item android:id="@+id/menu_add"
+        android:icon="@drawable/ic_menu_compose"
+        android:title="@string/menu_add"
+        android:alphabeticShortcut='a'
+        android:showAsAction="always" />
+
+    <!--  If there is currently data in the clipboard, this adds a PASTE menu item to the menu
+          so that the user can paste in the data.. -->
+    <item android:id="@+id/menu_paste"
+        android:icon="@drawable/ic_menu_compose"
+        android:title="@string/menu_paste"
+        android:alphabeticShortcut='p' />
+
+    <!--添加一个item用于搜索功能 -->
+    <item
+        android:id="@+id/menu_search"
+        android:icon="@android:drawable/ic_search_category_default"
+        android:showAsAction="always"
+        android:title="search"/>
+
+<!--    &lt;!&ndash; 添加一个item用于背景颜色选择功能 &ndash;&gt;-->
+<!--    <item-->
+<!--        android:id="@+id/background_select"-->
+<!--        android:icon="@android:drawable/alert_light_frame"-->
+<!--        android:showAsAction="always"-->
+<!--        android:title="select">-->
+<!--        <menu>-->
+<!--            <group android:checkableBehavior="single">-->
+<!--                <item-->
+<!--                    android:id="@+id/color_yellow"-->
+<!--                    android:showAsAction="never"-->
+<!--                    android:title="黄色" />-->
+<!--                <item-->
+<!--                    android:id="@+id/color_pink"-->
+<!--                    android:showAsAction="never"-->
+<!--                    android:title="粉色" />-->
+<!--                <item-->
+<!--                    android:id="@+id/color_green"-->
+<!--                    android:showAsAction="never"-->
+<!--                    android:title="绿色" />-->
+<!--            </group>-->
+<!--        </menu>-->
+<!--    </item>-->
+
+</menu>
