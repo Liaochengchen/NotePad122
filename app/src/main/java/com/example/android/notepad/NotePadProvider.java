@@ -737,7 +737,7 @@ public class NotePadProvider extends ContentProvider implements PipeDataWriter<C
                 );
                 break;
 
-            // 如果 URI 匹配到未知模式，抛出异常
+            // 如果 URI 匹配到未知模式，出异常
             default:
                 throw new IllegalArgumentException("Unknown URI " + uri);
         }

@@ -94,6 +94,16 @@ public class NoteEditor extends Activity {
 
     private static final int REQUEST_WRITE_STORAGE = 112;
 
+    private static final int[] BACKGROUND_COLORS = new int[] {
+        Color.rgb(255, 182, 193),    // 浅粉红
+        Color.rgb(255, 218, 185),    // 桃色
+        Color.rgb(176, 224, 230),    // 粉蓝色
+        Color.rgb(144, 238, 144),    // 淡绿色
+        Color.rgb(230, 230, 250),    // 淡紫色
+        Color.rgb(255, 255, 224),    // 浅黄色
+        Color.rgb(245, 245, 245)     // 浅灰色
+    };
+
     /**
      * Defines a custom EditText View that draws lines between each line of text that is displayed.
      */
@@ -306,61 +316,13 @@ public class NoteEditor extends Activity {
             String note = mCursor.getString(colNoteIndex);
             mText.setTextKeepState(note);
 
-            //读取颜色数据
-
-            if(mCursor!=null){
-
-                mCursor.moveToFirst();
-
-                int x = mCursor.getColumnIndex(NotePad.Notes.COLUMN_NAME_BACK_COLOR);
-
-                int y = mCursor.getInt(x);
-
-                Log.i("NoteEditor", "color"+y);
-
-                switch (y){
-
-                    case NotePad.Notes.DEFAULT_COLOR:
-
-                        mText.setBackgroundColor(Color.rgb(255, 255, 255));
-
-                        break;
-
-                    case NotePad.Notes.YELLOW_COLOR:
-
-                        mText.setBackgroundColor(Color.rgb(247, 216, 133));
-
-                        break;
-
-                    case NotePad.Notes.BLUE_COLOR:
-
-                        mText.setBackgroundColor(Color.rgb(165, 202, 237));
-
-                        break;
-
-                    case NotePad.Notes.GREEN_COLOR:
-
-                        mText.setBackgroundColor(Color.rgb(161, 214, 174));
-
-                        break;
-
-                    case NotePad.Notes.RED_COLOR:
-
-                        mText.setBackgroundColor(Color.rgb(244, 149, 133));
-
-                        break;
-
-                    default:
-
-                        mText.setBackgroundColor(Color.rgb(255, 255, 255));
-
-                        break;
-
-                }
-
-            }
-
-
+            // 获取笔记的ID
+            int idColumn = mCursor.getColumnIndex(NotePad.Notes._ID);
+            long noteId = mCursor.getLong(idColumn);
+            
+            // 根据笔记ID设置背景颜色
+            int colorIndex = (int)(noteId % BACKGROUND_COLORS.length);
+            mText.setBackgroundColor(BACKGROUND_COLORS[colorIndex]);
 
             // Stores the original note text, to allow the user to revert changes.
             if (mOriginalContent == null) {

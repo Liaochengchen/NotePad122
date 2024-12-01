@@ -1,11 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#F5F5F5">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:background="#FFFFFF"
+        android:elevation="4dp">
 
         <SearchView
             android:id="@+id/search_view"
@@ -13,9 +18,10 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_toLeftOf="@id/close_search_icon"
-            android:queryHint="搜索"
+            android:queryHint="搜索笔记"
             android:iconifiedByDefault="false"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="@android:color/transparent" />
 
         <ImageView
             android:id="@+id/close_search_icon"
@@ -27,14 +33,14 @@
             android:padding="8dp"
             android:clickable="true"
             android:focusable="true"
-        />
-
+            android:background="?android:attr/selectableItemBackgroundBorderless"/>
     </RelativeLayout>
 
     <ListView
         android:id="@+id/list_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </ListView>
-
+        android:layout_height="match_parent"
+        android:divider="#E0E0E0"
+        android:dividerHeight="1dp"
+        android:padding="8dp"/>
 </LinearLayout>
