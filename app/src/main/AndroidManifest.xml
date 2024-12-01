@@ -20,6 +20,7 @@
      own application, the package name must be changed from "com.example.*"
      to come from a domain that you own or have control over. -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.android.notepad">
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -128,9 +129,9 @@
 
         <!--换背景色-->
         <activity android:name=".NoteBackgroundSet"
+            android:label="@string/title_note_color"
             android:theme="@android:style/Theme.Holo.Light.Dialog"
-            android:label="setColor"
-            android:windowSoftInputMode="stateVisible"/>
+            android:windowSoftInputMode="stateHidden" />
 
     </application>
 

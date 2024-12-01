@@ -151,12 +151,46 @@ public final class NotePad {
          */
         public static final String COLUMN_NAME_MODIFICATION_DATE = "modified";
 
-
+        /**
+         * Column name for the background color
+         * <P>Type: INTEGER (long from System.curentTimeMillis())</P>
+         */
         public static final String COLUMN_NAME_BACK_COLOR = "color";
-        public static final int DEFAULT_COLOR = 0; //白
-        public static final int YELLOW_COLOR = 1; //黄
-        public static final int BLUE_COLOR = 2; //蓝
-        public static final int GREEN_COLOR = 3; //绿
-        public static final int RED_COLOR = 4; //红
+
+        /**
+         * Default background color
+         */
+        public static final int DEFAULT_COLOR = 0; // White
+
+        /**
+         * Yellow background color
+         */
+        public static final int YELLOW_COLOR = 1; // Yellow
+
+        /**
+         * Blue background color
+         */
+        public static final int BLUE_COLOR = 2; // Blue
+
+        /**
+         * Green background color
+         */
+        public static final int GREEN_COLOR = 3; // Green
+
+        /**
+         * Red background color
+         */
+        public static final int RED_COLOR = 4; // Red
+
+        /**
+         * Column name for the note category
+         * <P>Type: TEXT</P>
+         */
+        public static final String COLUMN_NAME_CATEGORY = "category";
+
+        /**
+         * Default category for notes
+         */
+        public static final String DEFAULT_CATEGORY = "未分类";
     }
 }

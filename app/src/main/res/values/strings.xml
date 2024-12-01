@@ -42,6 +42,7 @@
     <string name="nothing_to_save">There is nothing to save</string>
 
     <string name="note_search_label">Note Search</string>
-    <string name="menu_color" />
+    <string name="menu_color">Change background</string>
     <string name="menu_export" />
+    <string name="title_note_color">选择背景颜色</string>
 </resources>

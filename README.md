@@ -1,111 +1,257 @@
+# NotePad笔记本应用功能说明
 
-# Notepad期中项目
+主要功能：
+## 1. 时间戳功能
+![img_10.png](img_10.png)
+### 实现思路：
+1. 在NotePad.java中添加修改时间的字段定义
+2. 在NotePadProvider.java中实现时间格式化
+3. 在NotesList.java中显示时间戳
+4. 修改布局文件以适应时间显示
 
-## 一、功能模块
+### 关键代码：
+1. 在NotePad.java中添加字段：
 
-### 1.时间戳功能
+public static final String 
+COLUMN_NAME_MODIFICATION_DATE = "modified";
 
-![f21b4c00fc39c3dd3c951666f6a30834](f21b4c00fc39c3dd3c951666f6a30834.png)
+2. NotePadProvider.java中的时间格式化：
 
-如图，创建一个笔记或者进入编辑保存以后，会按照动作的时间更新时间戳。
+Long now = Long.valueOf(System.currentTimeMillis());
+Date date = new Date(now);
+SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
+String dateFormat = simpleDateFormat.format(date);
 
+3. NotesList.java中显示时间：
 
+private static final String[] PROJECTION = new String[] {
+NotePad.Notes.ID,
+NotePad.Notes.COLUMN_NAME_TITLE,
+NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE
+};
 
-### 2.搜索功能
+## 2. 搜索笔记功能
+对笔记标题和笔记内容同时进行进行模糊搜索（显示标题或者内容包含搜索内容的笔记）：
+如：搜索444
+![img.png](img.png)
+搜索555
+![img_1.png](img_1.png)
+![img_2.png](img_2.png)
+### 实现思路：
+1. 创建搜索界面布局
+2. 实现搜索功能的Activity
+3. 添加搜索选项到菜单
+4. 实现实时搜索结果显示
 
-![ec8342a80cffa0c7ffebde00b4d08913](ec8342a80cffa0c7ffebde00b4d08913.png)
-
-![62fd994dce4bcd634b0db646ec5b8bef](62fd994dce4bcd634b0db646ec5b8bef.png)
-
-![9443f7ea6b18ab10e9e98c5b2feadb30](9443f7ea6b18ab10e9e98c5b2feadb30.png)
-
-如图，可以根据标题搜索或者通过笔记内容模糊搜索，搜索框的×可以快速删除输入内容，搜索框外边的×可以快速关闭搜索界面回到主界面。
-
-### 3.更改背景色功能（编辑界面背景色）
-
-![050f68b30c130d340d4569e40714a753](050f68b30c130d340d4569e40714a753.png)
-
-![a0d9375135af4b046a43b78645bc2d2a](a0d9375135af4b046a43b78645bc2d2a.png)
-
-![1fd1aa956a12003661ccde2d84e49bfb](1fd1aa956a12003661ccde2d84e49bfb.png)
-
-如图，在菜单功能项，点击Select color然后选择想要的颜色，保存后即可完成对背景色的修改
-
-### 4.导出笔记内容
-
-![56bc6b41c736ea2521c24af05d51eaaa](56bc6b41c736ea2521c24af05d51eaaa.png)
-
-![bbb1dad6251b1555055a655560dc94a1](bbb1dad6251b1555055a655560dc94a1.png)
-
-![85fdf2865f71213ca9ddda21f977f5c4](85fdf2865f71213ca9ddda21f977f5c4.png)
-
-如图，点击菜单项选择Export note然后会直接把笔记以.txt形式导出到模拟器的File文件的download下
-
-## 二、功能实现
-
-### 1.时间戳代码逻辑
-
-获取当前系统时间（以毫秒为单位的时间戳），并将其转换为指定格式（`yyyy-MM-dd HH:mm:ss`）的日期和时间字符串，最后将该格式化后的时间字符串存储到一个名为 `values` 的映射（例如可能是用于存储数据库表列值的 `Map`）中
-
-### 2.搜索代码逻辑
-
-实现了在一个安卓应用的笔记功能中的搜索功能。用户可以在 `SearchView` 中输入关键词，然后根据笔记的标题和内容进行模糊匹配搜索，将匹配的结果展示在 `ListView` 中，并能通过点击搜索结果项执行相应的操作，比如查看或编辑对应的笔记。
-
-#### 搜索关键词提交处理（`onQueryTextSubmit`）
-
-onQueryTextSubmit` 方法在用户输入搜索关键词并点击搜索按钮（如果有的话）时被调用
-
-#### 搜索关键词变化处理（`onQueryTextChange`）
-
-当用户在 `SearchView` 中输入或修改搜索关键词时，`onQueryTextChange` 方法会被调用，这是实现搜索功能的核心部分
-
-### 3.修改背景色代码逻辑
-
-实现了在安卓应用的笔记功能中，为笔记设置不同背景颜色的功能。用户可以在界面上选择白色、黄色、蓝色、绿色、红色等不同颜色作为笔记的背景色，选择后相应的颜色值会被保存到数据库中与该笔记对应的记录里，以便下次打开笔记时能显示设置好的背景色。
-
-#### 获取当前背景色值（`onResume`方法）
-
-onResume方法在 Activity从暂停状态恢复到前台运行时被调用，其执行顺序在 `onCreate 之后
-
-#### 保存修改后的背景色值到数据库（`onPause`方法）
-
-onPause 方法在 Activity即将暂停（比如用户切换到其他应用或者按了手机的返回键等情况）时被调用，其执行顺序在 `finish()` 之后
-
-#### 设置背景色选择操作（`white`、`yellow`、`blue`、`green`、`blue`、`red`方法）
-
-对于 white、yellow、blue、green、red 这些方法，它们分别对应着用户选择白色、黄色、蓝色、绿色、红色等不同颜色作为笔记背景色的操作。
-
-### 4.导出笔记代码逻辑
-
-将当前笔记的标题和内容导出为一个文本文件，并保存到设备的指定目录（这里修改为外部存储的 “Download” 目录）下。在导出过程中，会根据需要处理权限问题，确保能够成功写入文件，最后通过弹出提示消息告知用户导出操作的结果。
-
-1. 获取笔记信息
-
-   从数据库游标`mCursor`获取笔记标题，从文本视图组件`mText`获取笔记内容。
-
-2. 生成文件名
-
-   对笔记标题进行处理，把非字母数字字符替换为下划线，再加上 “.txt” 扩展名作为文件名。
-
-3. 确定保存目录并创建（若不存在）
-
-   以外部存储的 “Download” 目录作为目标，若该目录不存在则创建它。
-
-4. 处理写入权限（安卓 6.0 及以上）
-
-   若未获取写入外部存储权限，就向用户请求该权限，获取到权限后才能继续后续操作。
-
-5. 写入文件并反馈结果
-
-   在`try-catch`块中进行文件写入操作。若写入成功，弹出提示告知用户导出成功及文件位置；若出现`IOException`，打印异常堆栈信息并提示用户导出失败。
+### 关键代码：
+1. NoteSearch.java中的搜索实现：
+public boolean onQueryTextChange(String newText) {
+Cursor cursor = sqLiteDatabase.query(
+NotePad.Notes.TABLE_NAME,
+PROJECTION,
+NotePad.Notes.COLUMN_NAME_TITLE + " like? or " +
+NotePad.Notes.COLUMN_NAME_NOTE + " like?",
+new String[]{"%" + newText + "%", "%" + newText + "%"},
+null,
+null,
+NotePad.Notes.DEFAULT_SORT_ORDER
+);
+}
 
 
+2. 搜索界面布局(note_search.xml)：
+
+xml
+<SearchView
+android:id="@+id/search_view"
+android:layout_width="0dp"
+android:layout_height="wrap_content"
+android:queryHint="搜索笔记"
+android:iconifiedByDefault="false"/>
+
+推展功能：
+## 拓展功能1. 界面美化
+### （1）自动notelist颜色
+![img_9.png](img_9.png)
+#### 实现思路：
+1. 在数据库中添加颜色字段
+2. 创建颜色选择界面
+3. 实现颜色选择和保存功能
+4. 在笔记列表和编辑界面显示对应颜色
+
+#### 关键代码：
+1. NotePad.java中添加颜色常量：
+   public static final String COLUMN_NAME_BACK_COLOR = "color";
+   public static final int DEFAULT_COLOR = 0;
+   public static final int YELLOW_COLOR = 1;
+   public static final int BLUE_COLOR = 2;
+   public static final int GREEN_COLOR = 3;
+   public static final int RED_COLOR = 4;
+
+2. NoteEditor.java中的颜色设置：
+   private static final int[] BACKGROUND_COLORS = new int[] {
+   Color.rgb(255, 182, 193), // 浅粉红
+   Color.rgb(255, 218, 185), // 桃色
+   Color.rgb(176, 224, 230), // 粉蓝色
+   Color.rgb(144, 238, 144), // 淡绿色
+   Color.rgb(230, 230, 250), // 淡紫色
+   Color.rgb(255, 255, 224), // 浅黄色
+   Color.rgb(245, 245, 245) // 浅灰色
+   };
+
+3. NoteBackgroundSet.java中的颜色选择实现：
+   public void white(View view){
+   color = NotePad.Notes.DEFAULT_COLOR;
+   finish();
+   }
+   public void yellow(View view){
+   color = NotePad.Notes.YELLOW_COLOR;
+   finish();
+   }
+
+（2）（主动更换背景）
+![img_7.png](img_7.png)
+![img_8.png](img_8.png)
+![img_4.png](img_4.png)
+### 实现思路：
+1. 在笔记编辑界面添加更换背景按钮
+2. 点击按钮弹出颜色选择对话框
+3. 选择颜色后立即应用到当前笔记
+
+### 关键代码：
+1. 添加菜单项：
+   xml
+   <item android:id="@+id/menu_color"
+   android:icon="@android:drawable/ic_menu_edit"
+   android:title="change background"
+   android:showAsAction="ifRoom|withText" />
 
 
+2. 处理菜单点击：
+   case R.id.menu_color:
+   Intent intent = new Intent(this, NoteBackgroundSet.class);
+   intent.setData(mUri);
+   startActivity(intent);
+   break;
+   3.note_color.xml颜色选择对话框布局：
++ <?xml version="1.0" encoding="utf-8"?>
++ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++     android:orientation="vertical"
++     android:layout_width="match_parent"
++     android:layout_height="match_parent"
++     android:padding="16dp"
++     android:background="#F5F5F5">
++
++     <Button
++         android:id="@+id/color_white"
++         android:layout_width="match_parent"
++         android:layout_height="wrap_content"
++         android:text="白色"
++         android:textColor="#212121"
++         android:background="#FFFFFF"
++         android:layout_marginBottom="8dp"
++         android:padding="16dp"
++         android:onClick="white"/>
++//其他颜色按钮设置同上
 
+4. 在NotePad.java中定义颜色相关常量：
++ ```java
++ public static final String COLUMN_NAME_BACK_COLOR = "color";
++ public static final int DEFAULT_COLOR = 0; // 白色
++ public static final int YELLOW_COLOR = 1;  // 黄色
++ public static final int BLUE_COLOR = 2;    // 蓝色
++ public static final int GREEN_COLOR = 3;   // 绿色
++ public static final int RED_COLOR = 4;     // 红色
+## 拓展功能2. 导出笔记功能
+实现效果：
+1. 在笔记编辑界面点击"Export note"按钮
+2. 将当前笔记内容导出为txt文件
+3. 保存到设备的Download目录
+4. 导出成功后显示文件保存路径
 
+![img_5.png](img_5.png)
+![img_6.png](img_6.png)
 
+### 实现思路：
+1. 在编辑界面菜单中添加导出选项
+2. 实现文件导出功能
+3. 添加必要的存储权限
+4. 导出成功后显示提示信息
 
+### 关键代码：
+1. 在AndroidManifest.xml中添加权限：
+```xml
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+```
 
+2. 在editor_options_menu.xml中添加导出菜单项：
+```xml
+<item android:id="@+id/menu_export"
+    android:icon="@android:drawable/edit_text"
+    android:title="Export note" />
+```
 
+3. NoteEditor.java中实现导出功能：
+```java
+private void exportNote() {
+    String title = mCursor.getString(mCursor.getColumnIndex(NotePad.Notes.COLUMN_NAME_TITLE));
+    String content = mText.getText().toString();
+    
+    // 创建文件名
+    String fileName = title.replaceAll("[^a-zA-Z0-9]", "_") + ".txt";
+    
+    // 获取下载目录
+    File dir = new File(Environment.getExternalStorageDirectory(), "Download");
+    if (!dir.exists()) {
+        dir.mkdirs();
+    }
+    
+    // 创建文件
+    File file = new File(dir, fileName);
+    
+    try {
+        // 写入笔记内容
+        FileOutputStream fos = new FileOutputStream(file);
+        fos.write(content.getBytes());
+        fos.close();
+        
+        // 显示成功提示
+        Toast.makeText(this, "Note exported to " + file.getAbsolutePath(), 
+            Toast.LENGTH_LONG).show();
+    } catch (IOException e) {
+        e.printStackTrace();
+        Toast.makeText(this, "Failed to export note", Toast.LENGTH_SHORT).show();
+    }
+}
+```
 
+  所有功能的完整代码可在对应的源文件中找到：
+1. 时间戳功能相关：
+- NotePad.java: 定义修改时间字段
+- NotePadProvider.java: 实现时间格式化和数据库操作
+- NotesList.java: 显示笔记列表和时间戳
+- noteslist_item.xml: 笔记列表项布局，包含时间显示
+
+2. 搜索功能相关：
+- NoteSearch.java: 实现搜索功能的Activity
+- note_search.xml: 搜索界面布局
+- searchlist_item.xml: 搜索结果列表项布局
+- AndroidManifest.xml: 注册搜索Activity
+
+3. 背景颜色相关：
+- NoteBackgroundSet.java: 颜色选择Activity
+- note_color.xml: 颜色选择对话框布局
+- NoteEditor.java: 笔记编辑和背景色应用
+- NotePad.java: 颜色相关常量定义
+- NotePadProvider.java: 颜色数据的存储
+
+4. 导出功能相关：
+- NoteEditor.java: 实现导出功能
+- editor_options_menu.xml: 添加导出菜单项
+- AndroidManifest.xml: 声明存储权限
+
+主要数据库相关文件：
+- NotePad.java: 定义数据库结构和常量
+- NotePadProvider.java: 实现数据库操作

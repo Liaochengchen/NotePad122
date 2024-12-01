@@ -38,6 +38,19 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.graphics.Color;
+import android.widget.ImageView;
+import android.content.ContentValues;
+import android.view.ViewGroup;
+import android.widget.TextView;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.widget.EditText;
+import android.text.TextUtils;
+import java.util.ArrayList;
+import android.app.LoaderManager;
+import android.content.CursorLoader;
+import android.content.Loader;
 
 /**
  * Displays a list of notes. Will display notes from the {@link Uri}
@@ -60,88 +73,64 @@ public class NotesList extends ListActivity {
     private static final String[] PROJECTION = new String[] {
             NotePad.Notes._ID, // 0
             NotePad.Notes.COLUMN_NAME_TITLE, // 1
-
-
-
-            NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE,//添加修改时间
-
-
-
-
+            NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE // 添加修改时间
     };
 
     /** The index of the title column */
     private static final int COLUMN_INDEX_TITLE = 1;
 
-    /**
-     * onCreate is called when Android starts this Activity from scratch.
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // The user does not need to hold down the key to use menu shortcuts.
         setDefaultKeyMode(DEFAULT_KEYS_SHORTCUT);
 
-        /* If no data is given in the Intent that started this Activity, then this Activity
-         * was started when the intent filter matched a MAIN action. We should use the default
-         * provider URI.
-         */
-        // Gets the intent that started this Activity.
         Intent intent = getIntent();
-
-        // If there is no data associated with the Intent, sets the data to the default URI, which
-        // accesses a list of notes.
         if (intent.getData() == null) {
             intent.setData(NotePad.Notes.CONTENT_URI);
         }
 
-        /*
-         * Sets the callback for context menu activation for the ListView. The listener is set
-         * to be this Activity. The effect is that context menus are enabled for items in the
-         * ListView, and the context menu is handled by a method in NotesList.
-         */
         getListView().setOnCreateContextMenuListener(this);
 
-        /* Performs a managed query. The Activity handles closing and requerying the cursor
-         * when needed.
-         *
-         * Please see the introductory note about performing provider operations on the UI thread.
-         */
         Cursor cursor = managedQuery(
-            getIntent().getData(),            // Use the default content URI for the provider.
-            PROJECTION,                       // Return the note ID and title for each note.
-            null,                             // No where clause, return all records.
-            null,                             // No where clause, therefore no where column values.
-            NotePad.Notes.DEFAULT_SORT_ORDER  // Use the default sort order.
+            getIntent().getData(),
+            PROJECTION,
+            null,
+            null,
+            NotePad.Notes.DEFAULT_SORT_ORDER
         );
 
-        /*
-         * The following two arrays create a "map" between columns in the cursor and view IDs
-         * for items in the ListView. Each element in the dataColumns array represents
-         * a column name; each element in the viewID array represents the ID of a View.
-         * The SimpleCursorAdapter maps them in ascending order to determine where each column
-         * value will appear in the ListView.
-         */
+        SimpleCursorAdapter adapter = new SimpleCursorAdapter(
+            this,
+            R.layout.noteslist_item,
+            cursor,
+            new String[] { 
+                NotePad.Notes.COLUMN_NAME_TITLE,
+                NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE
+            },
+            new int[] { 
+                android.R.id.text1,
+                R.id.text2
+            }
+        ) {
+            private final int[] BACKGROUND_COLORS = new int[] {
+                Color.rgb(255, 182, 193),    // 浅粉红
+                Color.rgb(255, 218, 185),    // 桃色
+                Color.rgb(176, 224, 230),    // 粉蓝色
+                Color.rgb(144, 238, 144),    // 淡绿色
+                Color.rgb(230, 230, 250),    // 淡紫色
+                Color.rgb(255, 255, 224),    // 浅黄色
+                Color.rgb(245, 245, 245)     // 浅灰色
+            };
 
-        // The names of the cursor columns to display in the view, initialized to the title column
-//        String[] dataColumns = { NotePad.Notes.COLUMN_NAME_TITLE,NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE}  ;//加入修改时间
-        String[] dataColumns = { NotePad.Notes.COLUMN_NAME_TITLE, NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE} ;//NotePad.Notes.COLUMN_NAME_NOTE?
-        // The view IDs that will display the cursor columns, initialized to the TextView in
-        // noteslist_item.xml
-        int[] viewIDs = { android.R.id.text1, R.id.text2};//加入修改时间
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                int colorIndex = position % BACKGROUND_COLORS.length;
+                view.setBackgroundColor(BACKGROUND_COLORS[colorIndex]);
+                return view;
+            }
+        };
 
-        // Creates the backing adapter for the ListView.
-        SimpleCursorAdapter adapter
-            = new SimpleCursorAdapter(
-                      this,                             // The Context for the ListView
-                      R.layout.noteslist_item,          // Points to the XML for a list item
-                      cursor,                           // The cursor to get items from
-                      dataColumns,
-                      viewIDs
-              );
-
-        // Sets the ListView's adapter to be the cursor adapter that was just created.
         setListAdapter(adapter);
     }
 
@@ -272,30 +261,17 @@ public class NotesList extends ListActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
         case R.id.menu_add:
-          /*
-           * Launches a new Activity using an Intent. The intent filter for the Activity
-           * has to have action ACTION_INSERT. No category is set, so DEFAULT is assumed.
-           * In effect, this starts the NoteEditor Activity in NotePad.
-           */
-           startActivity(new Intent(Intent.ACTION_INSERT, getIntent().getData()));
-           return true;
+            startActivity(new Intent(Intent.ACTION_INSERT, getIntent().getData()));
+            return true;
         case R.id.menu_paste:
-          /*
-           * Launches a new Activity using an Intent. The intent filter for the Activity
-           * has to have action ACTION_PASTE. No category is set, so DEFAULT is assumed.
-           * In effect, this starts the NoteEditor Activity in NotePad.
-           */
-          startActivity(new Intent(Intent.ACTION_PASTE, getIntent().getData()));
-          return true;
-
-            case R.id.menu_search:
-                Intent intent = new Intent();
-                intent.setClass(this, NoteSearch.class);
-                this.startActivity(intent);
-                return true;
-
-
-            default:
+            startActivity(new Intent(Intent.ACTION_PASTE, getIntent().getData()));
+            return true;
+        case R.id.menu_search:
+            Intent intent = new Intent();
+            intent.setClass(this, NoteSearch.class);
+            this.startActivity(intent);
+            return true;
+        default:
             return super.onOptionsItemSelected(item);
         }
     }

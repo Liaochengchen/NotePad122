@@ -1,85 +1,31 @@
-<!--<?xml version="1.0" encoding="utf-8"?>-->
-<!--&lt;!&ndash; Copyright (C) 2010 The Android Open Source Project-->
-
-<!--     Licensed under the Apache License, Version 2.0 (the "License");-->
-<!--     you may not use this file except in compliance with the License.-->
-<!--     You may obtain a copy of the License at-->
-<!--  -->
-<!--          http://www.apache.org/licenses/LICENSE-2.0-->
-<!--  -->
-<!--     Unless required by applicable law or agreed to in writing, software-->
-<!--     distributed under the License is distributed on an "AS IS" BASIS,-->
-<!--     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.-->
-<!--     See the License for the specific language governing permissions and-->
-<!--     limitations under the License.-->
-<!--&ndash;&gt;-->
-
-<!--&lt;!&ndash;<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"&ndash;&gt;-->
-<!--&lt;!&ndash;    android:layout_width="match_parent"&ndash;&gt;-->
-<!--&lt;!&ndash;    android:layout_height="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;    android:orientation="vertical">&ndash;&gt;-->
-
-<!--&lt;!&ndash;    &lt;!&ndash; Original TextView &ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;    <TextView&ndash;&gt;-->
-<!--&lt;!&ndash;        android:id="@android:id/text1"&ndash;&gt;-->
-<!--&lt;!&ndash;        android:layout_width="match_parent"&ndash;&gt;-->
-<!--&lt;!&ndash;        android:layout_height="?android:attr/listPreferredItemHeight"&ndash;&gt;-->
-<!--&lt;!&ndash;        &ndash;&gt;-->
-<!--&lt;!&ndash;        android:textAppearance="?android:attr/textAppearanceLarge"&ndash;&gt;-->
-<!--&lt;!&ndash;        android:gravity="center_vertical"&ndash;&gt;-->
-<!--&lt;!&ndash;        android:paddingLeft="5dip"&ndash;&gt;-->
-<!--&lt;!&ndash;        android:singleLine="true" />&ndash;&gt;-->
-
-<!--&lt;!&ndash;    &lt;!&ndash; New TextView (text2) &ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;    <TextView&ndash;&gt;-->
-<!--&lt;!&ndash;        android:id="@+id/text2"&ndash;&gt;-->
-<!--&lt;!&ndash;        android:layout_width="match_parent"&ndash;&gt;-->
-<!--&lt;!&ndash;        android:layout_height="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;        &ndash;&gt;-->
-<!--&lt;!&ndash;        android:gravity="center_vertical"&ndash;&gt;-->
-<!--&lt;!&ndash;        android:textSize="12dp"&ndash;&gt;-->
-<!--&lt;!&ndash;        android:paddingLeft="5dip"&ndash;&gt;-->
-<!--&lt;!&ndash;        android:paddingTop="@android:dimen/app_icon_size"&ndash;&gt;-->
-<!--&lt;!&ndash;        android:singleLine="true" />&ndash;&gt;-->
-<!--&lt;!&ndash;</LinearLayout>&ndash;&gt;-->
-
-
-
-
-<!--<TextView xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    android:id="@android:id/text1"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="?android:attr/listPreferredItemHeight"-->
-<!--    android:textAppearance="?android:attr/textAppearanceLarge"-->
-<!--    android:gravity="center_vertical"-->
-<!--    android:paddingLeft="5dip"-->
-<!--    android:singleLine="true"-->
-<!--    />-->
-
-
-
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:background="@android:color/white">
 
     <TextView
         android:id="@android:id/text1"
-        android:layout_width="match_parent"
-        android:layout_height="?android:attr/listPreferredItemHeight"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:gravity="center_vertical"
-        android:paddingLeft="5dip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/text2"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#212121"
+        android:textStyle="bold"
         android:singleLine="true"
-        />
+        android:ellipsize="end"/>
+
     <TextView
         android:id="@+id/text2"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="5dip"
-        android:singleLine="true"
-        android:gravity="center_vertical"
-        android:layout_below="@android:id/text1"
-        />
+        android:layout_alignParentRight="true"
+        android:layout_alignBaseline="@android:id/text1"
+        android:textColor="#2196F3"
+        android:textSize="14sp"
+        android:paddingLeft="16dp"/>
 </RelativeLayout>
 
 
