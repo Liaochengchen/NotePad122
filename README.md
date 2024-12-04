@@ -174,6 +174,7 @@ android:iconifiedByDefault="false"/>
 +         //其他颜色同上
    ```
 4. 在NotePad.java中定义颜色相关常量：
+   
    ```
 + public static final String COLUMN_NAME_BACK_COLOR = "color";
 + public static final int DEFAULT_COLOR = 0; // 白色
@@ -196,7 +197,7 @@ android:iconifiedByDefault="false"/>
 
 ### 关键代码：
 1. 在AndroidManifest.xml中添加权限：
-2. 
+   
 ```
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
