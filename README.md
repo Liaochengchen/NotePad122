@@ -37,10 +37,48 @@ Long now = Long.valueOf(System.currentTimeMillis());
 3. NotesList.java中显示时间：
 ```
 private static final String[] PROJECTION = new String[] {
-NotePad.Notes.ID,
-NotePad.Notes.COLUMN_NAME_TITLE,
-NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE
+    NotePad.Notes._ID,
+    NotePad.Notes.COLUMN_NAME_TITLE,
+    NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE
 };
+
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.noteslist);
+
+    Intent intent = getIntent();
+    if (intent.getData() == null) {
+        intent.setData(NotePad.Notes.CONTENT_URI);
+    }
+
+    getListView().setOnCreateContextMenuListener(this);
+
+    Cursor cursor = managedQuery(
+        getIntent().getData(),
+        PROJECTION,
+        null,
+        null,
+        NotePad.Notes.DEFAULT_SORT_ORDER
+    );
+
+    String[] dataColumns = { 
+        NotePad.Notes.COLUMN_NAME_TITLE,
+        NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE 
+    };
+
+    int[] viewIDs = { android.R.id.text1, R.id.text2 };
+
+    SimpleCursorAdapter adapter = new SimpleCursorAdapter(
+        this,
+        R.layout.noteslist_item,
+        cursor,
+        dataColumns,
+        viewIDs
+    );
+
+    setListAdapter(adapter);
+}
 ```
 4.修改笔记列表项布局 noteslist_item.xml：
 ```
