@@ -75,9 +75,47 @@ android:layout_height="wrap_content"
 android:queryHint="搜索笔记"
 android:iconifiedByDefault="false"/>
 ```
+3.搜索结果列表项布局 searchlist_item.xml：
 
-#推展功能：
-## 1. 界面美化
+```
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@android:id/text1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="#212121"/>
+
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@android:id/text1"
+        android:layout_marginTop="4dp"
+        android:textSize="12sp"
+        android:textColor="#757575"/>
+
+</RelativeLayout>
+```
+4.在 AndroidManifest.xml 中注册搜索活动：
+```
+  <activity android:name=".NoteSearch"
+            android:label="@string/note_search_label"
+            android:theme="@android:style/Theme.Holo.Light">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH_NOTES" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="vnd.android.cursor.dir/vnd.google.note" />
+            </intent-filter>
+        </activity>
+```
+
+## 拓展功能1. 界面美化
 ### （1）自动notelist颜色
 ![img_9.png](img_9.png)
 #### 实现思路：
@@ -183,7 +221,7 @@ android:iconifiedByDefault="false"/>
 + public static final int GREEN_COLOR = 3;   // 绿色
 + public static final int RED_COLOR = 4;     // 红色
 ```
-## 2. 导出笔记功能
+## 拓展功能2. 导出笔记功能
 
 ![img_12.png](img_12.png)  
 
