@@ -76,7 +76,7 @@ android:queryHint="搜索笔记"
 android:iconifiedByDefault="false"/>
 ```
 
-推展功能：
+#推展功能：
 ## 1. 界面美化
 ### （1）自动notelist颜色
 ![img_9.png](img_9.png)
