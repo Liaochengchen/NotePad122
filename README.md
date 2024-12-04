@@ -152,7 +152,6 @@ android:iconifiedByDefault="false"/>
 +     android:layout_height="match_parent"
 +     android:padding="16dp"
 +     android:background="#F5F5F5">
-+
 +     <Button
 +         android:id="@+id/color_white"
 +         android:layout_width="match_parent"
@@ -163,50 +162,7 @@ android:iconifiedByDefault="false"/>
 +         android:layout_marginBottom="8dp"
 +         android:padding="16dp"
 +         android:onClick="white"/>
-+
-+     <Button
-+         android:id="@+id/color_yellow"
-+         android:layout_width="match_parent"
-+         android:layout_height="wrap_content"
-+         android:text="黄色"
-+         android:textColor="#212121"
-+         android:background="#FFF9C4"
-+         android:layout_marginBottom="8dp"
-+         android:padding="16dp"
-+         android:onClick="yellow"/>
-+
-+     <Button
-+         android:id="@+id/color_blue"
-+         android:layout_width="match_parent"
-+         android:layout_height="wrap_content"
-+         android:text="蓝色"
-+         android:textColor="#FFFFFF"
-+         android:background="#2196F3"
-+         android:layout_marginBottom="8dp"
-+         android:padding="16dp"
-+         android:onClick="blue"/>
-+
-+     <Button
-+         android:id="@+id/color_green"
-+         android:layout_width="match_parent"
-+         android:layout_height="wrap_content"
-+         android:text="绿色"
-+         android:textColor="#FFFFFF"
-+         android:background="#4CAF50"
-+         android:layout_marginBottom="8dp"
-+         android:padding="16dp"
-+         android:onClick="green"/>
-+
-+     <Button
-+         android:id="@+id/color_red"
-+         android:layout_width="match_parent"
-+         android:layout_height="wrap_content"
-+         android:text="红色"
-+         android:textColor="#FFFFFF"
-+         android:background="#F44336"
-+         android:padding="16dp"
-+         android:onClick="red"/>
-+ </LinearLayout>
++//其他颜色同上
 ```
 4. 在NotePad.java中定义颜色相关常量：
 +```
