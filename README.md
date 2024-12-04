@@ -34,10 +34,15 @@ NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE
 ## 2. 搜索笔记功能
 对笔记标题和笔记内容同时进行进行模糊搜索（显示标题或者内容包含搜索内容的笔记）：
 如：搜索444
+
 ![img.png](img.png)
+
 搜索555
+
 ![img_1.png](img_1.png)
+
 ![img_2.png](img_2.png)
+
 ### 实现思路：
 1. 创建搜索界面布局
 2. 实现搜索功能的Activity
@@ -147,7 +152,7 @@ android:iconifiedByDefault="false"/>
    startActivity(intent);
    break;
    ```
-   3.note_color.xml颜色选择对话框布局：
+3.note_color.xml颜色选择对话框布局：
    ```
 + <?xml version="1.0" encoding="utf-8"?>
 + <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -167,19 +172,22 @@ android:iconifiedByDefault="false"/>
 +         android:padding="16dp"
 +         android:onClick="white"/>
 +         //其他颜色同上
-```
+   ```
 4. 在NotePad.java中定义颜色相关常量：
-+```
++ ```
 + public static final String COLUMN_NAME_BACK_COLOR = "color";
 + public static final int DEFAULT_COLOR = 0; // 白色
 + public static final int YELLOW_COLOR = 1;  // 黄色
 + public static final int BLUE_COLOR = 2;    // 蓝色
 + public static final int GREEN_COLOR = 3;   // 绿色
 + public static final int RED_COLOR = 4;     // 红色
-```
+  ```
 ## 2. 导出笔记功能
+
 ![img_12.png](img_12.png)  
+
 ![img_13.png](img_13.png)
+
 ### 实现思路：
 1. 在编辑界面菜单中添加导出选项
 2. 实现文件导出功能
