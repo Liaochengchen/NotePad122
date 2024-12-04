@@ -162,7 +162,7 @@ android:iconifiedByDefault="false"/>
 +         android:layout_marginBottom="8dp"
 +         android:padding="16dp"
 +         android:onClick="white"/>
-+//其他颜色同上
++         //其他颜色同上
 ```
 4. 在NotePad.java中定义颜色相关常量：
 +```
