@@ -16,21 +16,21 @@ public static final String
 COLUMN_NAME_MODIFICATION_DATE = "modified";
 
 2. NotePadProvider.java中的时间格式化：
-
+```
 Long now = Long.valueOf(System.currentTimeMillis());
 Date date = new Date(now);
 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
 String dateFormat = simpleDateFormat.format(date);
-
+```
 3. NotesList.java中显示时间：
-
+```
 private static final String[] PROJECTION = new String[] {
 NotePad.Notes.ID,
 NotePad.Notes.COLUMN_NAME_TITLE,
 NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE
 };
-
+```
 ## 2. 搜索笔记功能
 对笔记标题和笔记内容同时进行进行模糊搜索（显示标题或者内容包含搜索内容的笔记）：
 如：搜索444
@@ -46,6 +46,7 @@ NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE
 
 ### 关键代码：
 1. NoteSearch.java中的搜索实现：
+```
    public boolean onQueryTextChange(String newText) {
    Cursor cursor = sqLiteDatabase.query(
    NotePad.Notes.TABLE_NAME,
@@ -58,18 +59,17 @@ NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE
    NotePad.Notes.DEFAULT_SORT_ORDER
    );
    }
-
+```
 
 2. 搜索界面布局(note_search.xml)：
-
-xml
+```
 <SearchView
 android:id="@+id/search_view"
 android:layout_width="0dp"
 android:layout_height="wrap_content"
 android:queryHint="搜索笔记"
 android:iconifiedByDefault="false"/>
-
+```
 
 推展功能：
 ## 1. 界面美化
@@ -83,14 +83,17 @@ android:iconifiedByDefault="false"/>
 
 #### 关键代码：
 1. NotePad.java中添加颜色常量：
+```
    public static final String COLUMN_NAME_BACK_COLOR = "color";
    public static final int DEFAULT_COLOR = 0;
    public static final int YELLOW_COLOR = 1;
    public static final int BLUE_COLOR = 2;
    public static final int GREEN_COLOR = 3;
    public static final int RED_COLOR = 4;
+```
 
 2. NoteEditor.java中的颜色设置：
+```
    private static final int[] BACKGROUND_COLORS = new int[] {
    Color.rgb(255, 182, 193), // 浅粉红
    Color.rgb(255, 218, 185), // 桃色
@@ -100,8 +103,10 @@ android:iconifiedByDefault="false"/>
    Color.rgb(255, 255, 224), // 浅黄色
    Color.rgb(245, 245, 245) // 浅灰色
    };
+```
 
 3. NoteBackgroundSet.java中的颜色选择实现：
+```
    public void white(View view){
    color = NotePad.Notes.DEFAULT_COLOR;
    finish();
@@ -110,6 +115,7 @@ android:iconifiedByDefault="false"/>
    color = NotePad.Notes.YELLOW_COLOR;
    finish();
    }
+```
 
 （2）（主动更换背景）
 ![img_7.png](img_7.png)
@@ -122,20 +128,23 @@ android:iconifiedByDefault="false"/>
 
 ### 关键代码：
 1. 添加菜单项：
-   xml
+   ```
    <item android:id="@+id/menu_color"
    android:icon="@android:drawable/ic_menu_edit"
    android:title="change background"
    android:showAsAction="ifRoom|withText" />
-
+```
 
 2. 处理菜单点击：
+```
    case R.id.menu_color:
    Intent intent = new Intent(this, NoteBackgroundSet.class);
    intent.setData(mUri);
    startActivity(intent);
    break;
+```
    3.note_color.xml颜色选择对话框布局：
+   ```
 + <?xml version="1.0" encoding="utf-8"?>
 + <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 +     android:orientation="vertical"
@@ -198,14 +207,16 @@ android:iconifiedByDefault="false"/>
 +         android:padding="16dp"
 +         android:onClick="red"/>
 + </LinearLayout>
+```
 4. 在NotePad.java中定义颜色相关常量：
-+ ```java
++```
 + public static final String COLUMN_NAME_BACK_COLOR = "color";
 + public static final int DEFAULT_COLOR = 0; // 白色
 + public static final int YELLOW_COLOR = 1;  // 黄色
 + public static final int BLUE_COLOR = 2;    // 蓝色
 + public static final int GREEN_COLOR = 3;   // 绿色
 + public static final int RED_COLOR = 4;     // 红色
+```
 ## 2. 导出笔记功能
 ![img_12.png](img_12.png)  
 ![img_13.png](img_13.png)
@@ -217,20 +228,20 @@ android:iconifiedByDefault="false"/>
 
 ### 关键代码：
 1. 在AndroidManifest.xml中添加权限：
-```xml
+```
 <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 ```
 
 2. 在editor_options_menu.xml中添加导出菜单项：
-```xml
+```
 <item android:id="@+id/menu_export"
     android:icon="@android:drawable/edit_text"
     android:title="Export note" />
 ```
 
 3. NoteEditor.java中实现导出功能：
-```java
+```
 private void exportNote() {
     String title = mCursor.getString(mCursor.getColumnIndex(NotePad.Notes.COLUMN_NAME_TITLE));
     String content = mText.getText().toString();
