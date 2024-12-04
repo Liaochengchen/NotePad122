@@ -12,16 +12,27 @@
 ### 关键代码：
 1. 在NotePad.java中添加字段：
 ```
-public static final String
-COLUMN_NAME_MODIFICATION_DATE = "modified";
+public static final String COLUMN_NAME_CREATE_DATE = "created";
+public static final String COLUMN_NAME_MODIFICATION_DATE = "modified";
 ```
 2. NotePadProvider.java中的时间格式化：
 ```
 Long now = Long.valueOf(System.currentTimeMillis());
-Date date = new Date(now);
-SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
-String dateFormat = simpleDateFormat.format(date);
+        Date date = new Date(now);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Shanghai"));
+        String dateFormat = simpleDateFormat.format(date);
+
+        // 如果没有指定创建时间，则使用当前时间
+        if (values.containsKey(NotePad.Notes.COLUMN_NAME_CREATE_DATE) == false) {
+            values.put(NotePad.Notes.COLUMN_NAME_CREATE_DATE, dateFormat);
+        }
+
+        // 修改时间总是使用当前时间
+        values.put(NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE, dateFormat);
+
+        // If the values map doesn't contain a title, sets the value to the default title.
+        if (values.containsKey(NotePad.Notes.COLUMN_NAME_TITLE) == false) {
 ```
 3. NotesList.java中显示时间：
 ```
@@ -31,9 +42,43 @@ NotePad.Notes.COLUMN_NAME_TITLE,
 NotePad.Notes.COLUMN_NAME_MODIFICATION_DATE
 };
 ```
+4.修改笔记列表项布局 noteslist_item.xml：
+```
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp"
+    android:background="@android:color/white">
+
+    <TextView
+        android:id="@android:id/text1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/text2"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#212121"
+        android:textStyle="bold"
+        android:singleLine="true"
+        android:ellipsize="end"/>
+
+    <TextView
+        android:id="@+id/text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignBaseline="@android:id/text1"
+        android:textColor="#2196F3"
+        android:textSize="14sp"
+        android:paddingLeft="16dp"/>
+</RelativeLayout>
+
+```
 ## 2. 搜索笔记功能
 对笔记标题和笔记内容同时进行进行模糊搜索（显示标题或者内容包含搜索内容的笔记）：
-如：搜索444
+如：
+搜索444
 
 ![img.png](img.png)
 
