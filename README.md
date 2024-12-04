@@ -175,14 +175,14 @@ android:iconifiedByDefault="false"/>
    ```
 4. 在NotePad.java中定义颜色相关常量：
    
-   ```
+```
 + public static final String COLUMN_NAME_BACK_COLOR = "color";
 + public static final int DEFAULT_COLOR = 0; // 白色
 + public static final int YELLOW_COLOR = 1;  // 黄色
 + public static final int BLUE_COLOR = 2;    // 蓝色
 + public static final int GREEN_COLOR = 3;   // 绿色
 + public static final int RED_COLOR = 4;     // 红色
-  ```
+```
 ## 2. 导出笔记功能
 
 ![img_12.png](img_12.png)  
