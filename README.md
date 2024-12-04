@@ -156,22 +156,22 @@ android:iconifiedByDefault="false"/>
    ```
 + <?xml version="1.0" encoding="utf-8"?>
 + <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-+     android:orientation="vertical"
-+     android:layout_width="match_parent"
-+     android:layout_height="match_parent"
-+     android:padding="16dp"
-+     android:background="#F5F5F5">
-+     <Button
-+         android:id="@+id/color_white"
-+         android:layout_width="match_parent"
-+         android:layout_height="wrap_content"
-+         android:text="白色"
-+         android:textColor="#212121"
-+         android:background="#FFFFFF"
-+         android:layout_marginBottom="8dp"
-+         android:padding="16dp"
-+         android:onClick="white"/>
-+         //其他颜色同上
++  android:orientation="vertical"
++  android:layout_width="match_parent"
++  android:layout_height="match_parent"
++  android:padding="16dp"
++  android:background="#F5F5F5">
++  <Button
++  android:id="@+id/color_white"
++  android:layout_width="match_parent"
++  android:layout_height="wrap_content"
++  android:text="白色"
++  android:textColor="#212121"
++  android:background="#FFFFFF"
++  android:layout_marginBottom="8dp"
++  android:padding="16dp"
++  android:onClick="white"/>
++  //其他颜色同上
    ```
 4. 在NotePad.java中定义颜色相关常量：
    
