@@ -11,10 +11,10 @@
 
 ### 关键代码：
 1. 在NotePad.java中添加字段：
-
+```
 public static final String
 COLUMN_NAME_MODIFICATION_DATE = "modified";
-
+```
 2. NotePadProvider.java中的时间格式化：
 ```
 Long now = Long.valueOf(System.currentTimeMillis());
