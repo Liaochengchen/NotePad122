@@ -118,9 +118,13 @@ android:iconifiedByDefault="false"/>
 ```
 
 （2）（主动更换背景）
+
 ![img_7.png](img_7.png)
+
 ![img_8.png](img_8.png)
+
 ![img_11.png](img_11.png)
+
 ### 实现思路：
 1. 在笔记编辑界面添加更换背景按钮
 2. 点击按钮弹出颜色选择对话框
@@ -133,16 +137,16 @@ android:iconifiedByDefault="false"/>
    android:icon="@android:drawable/ic_menu_edit"
    android:title="change background"
    android:showAsAction="ifRoom|withText" />
-```
+   ```
 
 2. 处理菜单点击：
-```
+   ```
    case R.id.menu_color:
    Intent intent = new Intent(this, NoteBackgroundSet.class);
    intent.setData(mUri);
    startActivity(intent);
    break;
-```
+   ```
    3.note_color.xml颜色选择对话框布局：
    ```
 + <?xml version="1.0" encoding="utf-8"?>
